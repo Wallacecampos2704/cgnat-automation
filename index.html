@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinela Tech Dash - CGNAT Brasil & Segurança Eletrônica</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🛡️ Sentinela Tech Dash</h1>
+                <p>Monitoramento CGNAT & Segurança Eletrônica</p>
+            </div>
+            <button class="menu-toggle" id="menuToggle">☰ Menu</button>
+            <nav class="nav" id="mainNav">
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#cgnat" class="nav-link">CGNAT</a>
+                <a href="#noticias" class="nav-link">Notícias</a>
+                <a href="#inovacoes" class="nav-link">Inovações</a>
+                <a href="#infraestrutura" class="nav-link">Infraestrutura</a>
+                <a href="#ferramentas" class="nav-link">Ferramentas</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <h2 class="section-title">📊 Dashboard Geral</h2>
+                
+                <!-- KPIs -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🌐</div>
+                        <div class="kpi-value" id="kpi-total-cgnat">0</div>
+                        <div class="kpi-label">IPs em CGNAT</div>
+                        <div class="kpi-trend positive">+12.5%</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">📡</div>
+                        <div class="kpi-value" id="kpi-saturacao">0%</div>
+                        <div class="kpi-label">Saturação Média</div>
+                        <div class="kpi-trend negative">+3.2%</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">🏢</div>
+                        <div class="kpi-value" id="kpi-ufs-criticas">0</div>
+                        <div class="kpi-label">UFs Críticas</div>
+                        <div class="kpi-trend neutral">Estável</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon">📰</div>
+                        <div class="kpi-value" id="kpi-noticias">0</div>
+                        <div class="kpi-label">Notícias Hoje</div>
+                        <div class="kpi-trend positive">+8</div>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Evolução CGNAT (12 meses)</h3>
+                        <div id="chart-evolucao" class="chart-container"></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Saturação por Estado</h3>
+                        <div id="chart-saturacao" class="chart-container"></div>
+                    </div>
+                </div>
+
+                <!-- Mapa de Calor -->
+                <div class="chart-card full-width">
+                    <h3>🗺️ Mapa de Calor - Incidência CGNAT no Brasil</h3>
+                    <div id="mapa-brasil" class="map-container"></div>
+                    <div class="legenda">
+                        <span class="legenda-item"><span class="cor baixo"></span> Baixo (< 40%)</span>
+                        <span class="legenda-item"><span class="cor medio"></span> Médio (40-70%)</span>
+                        <span class="legenda-item"><span class="cor alto"></span> Alto (> 70%)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CGNAT Section -->
+        <section id="cgnat" class="section">
+            <div class="container">
+                <h2 class="section-title">🔍 Análise Detalhada CGNAT</h2>
+                
+                <div class="filters">
+                    <select id="filtro-estado" class="filter-select">
+                        <option value="todos">Todos os Estados</option>
+                    </select>
+                    <select id="filtro-periodo" class="filter-select">
+                        <option value="12m">Últimos 12 meses</option>
+                        <option value="6m">Últimos 6 meses</option>
+                        <option value="3m">Últimos 3 meses</option>
+                    </select>
+                </div>
+
+                <div class="detalhes-grid">
+                    <div class="detalhe-card">
+                        <h4>Top 5 Estados com Maior Saturação</h4>
+                        <div id="top-estados" class="lista-estados"></div>
+                    </div>
+                    <div class="detalhe-card">
+                        <h4>Histórico Mensal</h4>
+                        <div id="historico-mensal" class="chart-container"></div>
+                    </div>
+                </div>
+
+                <div class="alertas-box">
+                    <h3>⚠️ Alertas de Zonas Críticas</h3>
+                    <div id="alertas-lista" class="alertas-lista"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notícias Section -->
+        <section id="noticias" class="section">
+            <div class="container">
+                <h2 class="section-title">📰 Notícias de Segurança Eletrônica</h2>
+                
+                <div class="filtros-noticias">
+                    <button class="filtro-btn active" data-categoria="todas">Todas</button>
+                    <button class="filtro-btn" data-categoria="brasil">🇧🇷 Brasil</button>
+                    <button class="filtro-btn" data-categoria="mundo">🌍 Mundo</button>
+                    <button class="filtro-btn" data-categoria="inovacao">💡 Inovação</button>
+                    <button class="filtro-btn" data-categoria="redes">📡 Redes</button>
+                    <button class="filtro-btn" data-categoria="infraestrutura">🏗️ Infraestrutura</button>
+                </div>
+
+                <div id="noticias-grid" class="noticias-grid"></div>
+            </div>
+        </section>
+
+        <!-- Inovações Section -->
+        <section id="inovacoes" class="section">
+            <div class="container">
+                <h2 class="section-title">💡 Inovações & Tendências 2026</h2>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="tendencias">Tendências</button>
+                    <button class="tab-btn" data-tab="startups">Startups</button>
+                    <button class="tab-btn" data-tab="patentes">Patentes</button>
+                    <button class="tab-btn" data-tab="cases">Cases de Sucesso</button>
+                </div>
+
+                <div id="conteudo-inovacoes" class="conteudo-tab"></div>
+            </div>
+        </section>
+
+        <!-- Infraestrutura Section -->
+        <section id="infraestrutura" class="section">
+            <div class="container">
+                <h2 class="section-title">🏗️ Infraestrutura de Redes</h2>
+                
+                <div class="infra-grid">
+                    <div class="infra-card">
+                        <h3>Velocidade Média por Estado</h3>
+                        <div id="chart-velocidade" class="chart-container"></div>
+                    </div>
+                    <div class="infra-card">
+                        <h3>Adoção IPv6 no Brasil</h3>
+                        <div id="chart-ipv6" class="chart-container"></div>
+                    </div>
+                    <div class="infra-card full-width">
+                        <h3>Market Share dos ISPs</h3>
+                        <div id="chart-market-share" class="chart-container"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ferramentas Section -->
+        <section id="ferramentas" class="section">
+            <div class="container">
+                <h2 class="section-title">🛠️ Ferramentas</h2>
+                
+                <div class="ferramentas-grid">
+                    <!-- Calculadora ROI -->
+                    <div class="ferramenta-card">
+                        <h3>💰 Calculadora de ROI</h3>
+                        <form id="form-roi" class="formulario">
+                            <div class="form-group">
+                                <label>Investimento Inicial (R$)</label>
+                                <input type="number" id="roi-investimento" placeholder="Ex: 50000" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Retorno Mensal Esperado (R$)</label>
+                                <input type="number" id="roi-retorno" placeholder="Ex: 5000" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Período (meses)</label>
+                                <input type="number" id="roi-periodo" placeholder="Ex: 24" required>
+                            </div>
+                            <button type="submit" class="btn-calcular">Calcular ROI</button>
+                        </form>
+                        <div id="resultado-roi" class="resultado"></div>
+                    </div>
+
+                    <!-- Diagnóstico Regional -->
+                    <div class="ferramenta-card">
+                        <h3>🔍 Diagnóstico Regional</h3>
+                        <form id="form-diagnostico" class="formulario">
+                            <div class="form-group">
+                                <label>Selecione o Estado</label>
+                                <select id="diag-estado" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo de Rede</label>
+                                <select id="diag-tipo" required>
+                                    <option value="residencial">Residencial</option>
+                                    <option value="empresarial">Empresarial</option>
+                                    <option value="industrial">Industrial</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-calcular">Analisar</button>
+                        </form>
+                        <div id="resultado-diagnostico" class="resultado"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Sentinela Tech Dash. Dados atualizados em tempo real.</p>
+            <p>Fontes: Anatel, NIC.br, Registro.br, Fontes Especializadas</p>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
