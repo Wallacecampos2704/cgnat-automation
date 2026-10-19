@@ -111,7 +111,9 @@ elif menu == "📡 Ferramentas de Rede":
     
     col_in, col_res = st.columns(2)
     with col_in:
-        target_ip = st.text_input("IP ou Host para Teste:", value=get_user_ip())
+        if "scan_target_ip" not in st.session_state:
+            st.session_state["scan_target_ip"] = get_user_ip()
+        target_ip = st.text_input("IP ou Host para Teste:", key="scan_target_ip")
         preset_ports = "80, 443, 37777, 37778, 8000, 8080, 554, 9000, 34567, 10000"
         ports_to_test = st.text_area("Portas (máx 10, separadas por vírgula):", value=preset_ports)
         run_scan = st.button("🚀 Iniciar Varredura")
