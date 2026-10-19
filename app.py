@@ -78,7 +78,7 @@ if menu == "📊 Dashboard Nacional":
         else: color = '#28a745'
         return f'background-color: {color}; color: white'
 
-    st.table(df.style.applymap(color_crit, subset=['Criticidade']))
+    st.table(df.style.map(color_crit, subset=['Criticidade']))
 
 # --- ABA 2: FILTRO POR CIDADE ---
 elif menu == "🏙️ Filtro por Cidade":
@@ -110,8 +110,10 @@ elif menu == "📡 Ferramentas de Rede":
     st.write("Teste até 10 portas simultaneamente no seu IP ou do cliente.")
     
     col_in, col_res = st.columns(2)
-    with col_input:
-        target_ip = st.text_input("IP ou Host para Teste:", value=get_user_ip())
+    with col_in:
+        if "scan_target_ip" not in st.session_state:
+            st.session_state["scan_target_ip"] = get_user_ip()
+        target_ip = st.text_input("IP ou Host para Teste:", key="scan_target_ip")
         preset_ports = "80, 443, 37777, 37778, 8000, 8080, 554, 9000, 34567, 10000"
         ports_to_test = st.text_area("Portas (máx 10, separadas por vírgula):", value=preset_ports)
         run_scan = st.button("🚀 Iniciar Varredura")
